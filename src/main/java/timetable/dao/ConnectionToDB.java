@@ -4,22 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectionToDB {
-    public static void main(String[] args) {
-        try {
-            String url = "jdbc:postgresql://localhost:5432/time_table";
-            String username = "postgres";
-            String password = "postgres";
-            Class.forName("org.postgresql.Driver");
 
-            try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            conn.createStatement();
-                System.out.println("Connection to Store DB succesfull!");
+    private static Connection connection;
+
+    private ConnectionToDB() {
+    }
+
+    public static Connection getConnection() {
+        if (connection == null) {
+            try {
+                String url = "jdbc:postgresql://localhost:5432/time_table";
+                String username = "postgres";
+                String password = "postgres";
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection(url, username, password);
+                return connection;
+            } catch (Exception ex) {
+                System.out.println("Connection failed...");
+                System.out.println(ex);
             }
-        } catch (Exception ex) {
-            System.out.println("Connection failed...");
-
-            System.out.println(ex);
         }
-
+        return connection;
     }
 }
