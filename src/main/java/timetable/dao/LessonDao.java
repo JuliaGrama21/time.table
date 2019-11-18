@@ -1,6 +1,9 @@
 package timetable.dao;
 
-import timetable.model.*;
+import timetable.model.Day;
+import timetable.model.Lesson;
+import timetable.model.LessonType;
+import timetable.model.TimeSlot;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class LessonDao {
         }
     }
 
-    public List<Lesson> getLessonsForTeacher(Teacher teacher) {
+    public List<Lesson> getLessonsByTeacher(Long id) {
         List<Lesson> lessonsForTeacher = new ArrayList<>();
         GroupDao groupDao = new GroupDao();
         RoomDao roomDao = new RoomDao();
@@ -36,9 +39,8 @@ public class LessonDao {
             String sql = "SELECT * from lessons WHERE id_teacher = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Math.toIntExact(teacher.getId()));
+            statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 String lessonId = rs.getString("lesson_id");
                 TimeSlot timeSlot = TimeSlot.valueOf(rs.getString("time_slot"));
@@ -62,7 +64,7 @@ public class LessonDao {
         return lessonsForTeacher;
     }
 
-    public List<Lesson> getLessonsForRoom(Room room) {
+    public List<Lesson> getLessonsByRoom(Long id) {
         List<Lesson> lessonsForRoom = new ArrayList<>();
         GroupDao groupDao = new GroupDao();
         TeacherDao teacherDao = new TeacherDao();
@@ -71,9 +73,8 @@ public class LessonDao {
             String sql = "SELECT * from lessons WHERE id_room = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Math.toIntExact(room.getId()));
+            statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 String lessonId = rs.getString("lesson_id");
                 TimeSlot timeSlot = TimeSlot.valueOf(rs.getString("time_slot"));
@@ -96,7 +97,7 @@ public class LessonDao {
         return lessonsForRoom;
     }
 
-    public List<Lesson> getLessonsForGroup(Group group) {
+    public List<Lesson> getLessonsByGroup(Long id) {
         List<Lesson> lessonsForGroup = new ArrayList<>();
         RoomDao roomDao = new RoomDao();
         TeacherDao teacherDao = new TeacherDao();
@@ -105,9 +106,8 @@ public class LessonDao {
             String sql = "SELECT * from lessons WHERE id_group = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Math.toIntExact(group.getId()));
+            statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 String lessonId = rs.getString("lesson_id");
                 TimeSlot timeSlot = TimeSlot.valueOf(rs.getString("time_slot"));
@@ -130,15 +130,14 @@ public class LessonDao {
         return lessonsForGroup;
     }
 
-    public void deleteLesson(Lesson lesson) {
-
+    public void deleteLesson(Long id) {
         PreparedStatement statement = null;
         Connection connection = null;
         try {
-            String sql = "delete from lessons where id = ?";
+            String sql = "delete from lessons where lesson_id = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Math.toIntExact(lesson.getId()));
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -154,6 +153,25 @@ public class LessonDao {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public boolean updateLesson(Lesson lesson) {
+        PreparedStatement preparedStatement;
+        String sql = "UPDATE rooms SET time_slot = ?, id_group, id_teacher, id_room = ?, lesson_type = ?, day = ? WHERE id = ?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, String.valueOf(lesson.getTimeSlot()));
+            preparedStatement.setLong(2, lesson.getGroup().getId());
+            preparedStatement.setLong(2, lesson.getTeacher().getId());
+            preparedStatement.setLong(2, lesson.getRoom().getId());
+            preparedStatement.setString(1, String.valueOf(lesson.getLessonType()));
+            preparedStatement.setString(1, String.valueOf(lesson.getDay()));
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public void dropTableLesson() {
@@ -224,7 +242,6 @@ public class LessonDao {
             statement.setString(2, lesson.getTimeSlot().name());
             statement.setString(3, lesson.getDay().name());
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 int count = rs.getInt("count");
                 if (count > 0) {
@@ -235,5 +252,32 @@ public class LessonDao {
             System.out.println(e.getMessage());
         }
         return true;
+    }
+
+    public Lesson findLessonById(Long lessonId) {
+        Lesson lesson = new Lesson();
+        GroupDao groupDao = new GroupDao();
+        RoomDao roomDao = new RoomDao();
+        TeacherDao teacherDao = new TeacherDao();
+        PreparedStatement statement;
+        try {
+            String sql = "SELECT * from lessons WHERE lesson_id = ?";
+            connection = ConnectionToDB.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, lessonId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                lesson.setId(lessonId);
+                lesson.setTimeSlot(TimeSlot.valueOf(rs.getString("time_slot")));
+                lesson.setGroup(groupDao.findGroupById(rs.getLong("id_group")));
+                lesson.setRoom(roomDao.findRoomById(rs.getLong("id_room")));
+                lesson.setTeacher(teacherDao.findTeacherById(rs.getLong("id_teacher")));
+                lesson.setLessonType(LessonType.valueOf(rs.getString("lesson_type")));
+                lesson.setDay(Day.valueOf(rs.getString("day")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lesson;
     }
 }

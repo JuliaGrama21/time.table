@@ -12,6 +12,12 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(String firstName, String lastName, String position) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+    }
+
     public Teacher(Long id, String firstName, String lastName, String position) {
         this.id = id;
         this.firstName = firstName;
@@ -32,9 +38,9 @@ public class Teacher {
     }
 
     public void setFirstName(String firstName) {
-        if (firstName.length() < 2){
-            System.out.println("Довжина ім'я мала");
-        }
+//        if (firstName.length() < 2){
+//            System.out.println("Довжина ім'я мала");
+//        }
 
         this.firstName = firstName;
     }
