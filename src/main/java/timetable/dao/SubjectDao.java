@@ -1,34 +1,33 @@
 package timetable.dao;
 
-import timetable.model.Room;
-import timetable.model.RoomType;
+import timetable.model.Subject;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao {
-
+public class SubjectDao {
     private Connection connection = ConnectionToDB.getConnection();
 
-    public boolean addRoom(Room room) {
+    public boolean addSubject(Subject subject) {
         try {
-            String INSERT_ROOM = "INSERT INTO rooms(room_number, room_type) VALUES (?,?)";
-            PreparedStatement statement = connection.prepareStatement(INSERT_ROOM);
-            statement.setInt(1, room.getNumber());
-            statement.setString(2, room.getRoomType().name());
-            statement.executeUpdate();
-            return true;
+            if (checkSubject(subject)) {
+                String INSERT_SUBJECT = "INSERT INTO subjects(name) VALUES (?)";
+                PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT);
+                statement.setString(1, subject.getName());
+                statement.executeUpdate();
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean deleteRoom(Long id) {
+    public boolean deleteSubject(Long id) {
         PreparedStatement statement;
         try {
-            String sql = "delete from rooms where room_id = ?";
+            String sql = "delete from subjects where subject_id = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
@@ -40,14 +39,13 @@ public class RoomDao {
         return true;
     }
 
-    public boolean updateRoom(Room room) {
+    public boolean updateSubject(Subject subject) {
         PreparedStatement preparedStatement;
-        String sql = "UPDATE rooms SET room_number = ?, room_type = ? WHERE room_id = ?";
+        String sql = "UPDATE subjects SET name = ? WHERE subject_id = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, room.getNumber());
-            preparedStatement.setString(2, String.valueOf(room.getRoomType()));
-            preparedStatement.setLong(3, room.getId());
+            preparedStatement.setString(1, subject.getName());
+            preparedStatement.setLong(2, subject.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +54,7 @@ public class RoomDao {
         return true;
     }
 
-    public void dropTableRoom() {
+    public void dropTableSubject() {
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -64,87 +62,87 @@ public class RoomDao {
             e.printStackTrace();
         }
         try {
-            statement.execute("DROP TABLE rooms CASCADE ");
+            statement.execute("DROP TABLE subjects CASCADE ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Long getRoomIdByNumber(int number) {
-        Room room = new Room();
+    public Long getSubjectIdByName(String name) {
+        Subject subject = new Subject();
         PreparedStatement statement;
         try {
-            String sql = "SELECT room_id from rooms WHERE room_number = ?";
+            String sql = "SELECT subject_id from subjects WHERE name = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, number);
+            statement.setString(1, name);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                room.setId(rs.getLong("room_id"));
+                subject.setId(rs.getLong("subject_id"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return room.getId();
+        return subject.getId();
     }
 
-    public Room findRoomById(Long roomId) {
-        Room room = new Room();
+    public Subject findSubjectById(Long subjectId) {
+        Subject subject = new Subject();
         PreparedStatement statement;
         try {
-            String sql = "SELECT * from rooms WHERE room_id = ?";
+            String sql = "SELECT * from subjects WHERE subject_id = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setLong(1, roomId);
+            statement.setLong(1, subjectId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                room.setId(roomId);
-                room.setNumber(rs.getInt("room_number"));
-                room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
+                subject.setId(subjectId);
+                subject.setName(rs.getString("name"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return room;
+        return subject;
     }
 
-    public String getRoomTypeByNumber(int number) {
-        Room room = new Room();
+    public List<Subject> getAllSubjects() {
+        List<Subject> subjectList = new ArrayList<>();
         PreparedStatement statement;
         try {
-            String sql = "SELECT room_type from rooms WHERE room_number = ?";
+            String sql = "SELECT * from subjects";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, number);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
+                Subject subject = new Subject();
+                subject.setId(rs.getLong("subject_id"));
+                subject.setName(rs.getString("name"));
+                subjectList.add(subject);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return room.getRoomType().name();
+        return subjectList;
     }
 
-    public List<Room> getAllRooms() {
-        List<Room> roomList = new ArrayList<>();
+    public boolean checkSubject(Subject subject) {
         PreparedStatement statement;
         try {
-            String sql = "SELECT * from rooms";
+            String sql = "SELECT COUNT(*) from subjects WHERE name = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
+            statement.setString(1, subject.getName());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Room room = new Room();
-                room.setId(rs.getLong("room_id"));
-                room.setNumber(rs.getInt("room_number"));
-                room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
-                roomList.add(room);
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    return false;
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return roomList;
+        return true;
     }
 }

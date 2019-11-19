@@ -13,6 +13,9 @@
 <body>
 <div style="width: 900px" class="container panel panel-footer">
     <h3 style="text-align: center">List Of Group</h3>
+    <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
+        ${error}
+    </div>
     <c:if test="${groups.size() == 0}">
         <div><em>No groups</em></div>
     </c:if>
@@ -37,7 +40,7 @@
                                 id="${group.id}"></button>
                     </td>
                     <td class="text-center"><a class="btn btn-primary"
-                                               href="/lessons?groupId=${group.id}">TimeTable</a>
+                                               href="/lessons?id=${group.id}">TimeTable</a>
                     </td>
                 </tr>
             </c:forEach>

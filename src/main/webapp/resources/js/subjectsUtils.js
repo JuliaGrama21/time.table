@@ -1,11 +1,11 @@
 $('document').ready(function () {
 
-    $('.deleteLesson').each(function () {
+    $('.deleteSubject').each(function () {
         var btn = $(this);
         btn.click(function () {
-            if (confirm("Are you sure you want to delete this lesson?")) {
+            if (confirm("Are you sure you want to delete this subject?")) {
                 $.ajax({
-                    url: '/deleteLesson',
+                    url: '/deleteSubject',
                     type: 'post',
                     data: {id: btn.attr('id')},
                     success: function () {

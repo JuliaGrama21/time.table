@@ -13,14 +13,15 @@
 <body>
 <div style="width: 900px" class="container panel panel-footer">
     <h3 style="text-align: center">Enter information</h3>
-
-    <form action="${pageContext.request.contextPath}/addTeacher" method="post">
+    <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
+        ${error}
+    </div>
+    <form action="addRoom" method="post">
         <table class="table">
             <tr>
                 <td><p>Number Of Room: </p></td>
-                <td><input style="width: 60%" type="text" id="number" name="number" maxlength="5"
+                <td><input style="width: 60%" type="text" name="number" maxlength="30"
                            class="form-control" required="true"></td>
-
             </tr>
             <tr>
                 <td><p>Type Of Room: </p></td>

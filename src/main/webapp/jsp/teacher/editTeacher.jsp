@@ -14,6 +14,9 @@
     <h3 align="center">
         Enter information
     </h3>
+    <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
+        ${error}
+    </div>
     <form action="editTeacher" method="post">
         <input type="hidden" name="id" value="${teacher.id}">
         <table class="table">
@@ -31,7 +34,8 @@
             <tr>
                 <td><p>Position: </p></td>
                 <td><input style="width: 60%" type="text" name="position" maxlength="30" value="${teacher.position}"
-                           class="form-control"></td></td>
+                           class="form-control"></td>
+                </td>
             </tr>
             <tr>
                 <td>

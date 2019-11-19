@@ -6,6 +6,7 @@ public class Lesson {
 
     private Long id;
     private TimeSlot timeSlot;
+    private Subject subject;
     private Group group;
     private Teacher teacher;
     private Room room;
@@ -15,15 +16,15 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(Long id, TimeSlot timeSlot, Group group, Teacher teacher, Room room, LessonType lessonType, Day day) {
+    public Lesson(Long id, TimeSlot timeSlot, Subject subject, Group group, Teacher teacher, Room room, LessonType lessonType, Day day) {
         this.id = id;
         this.timeSlot = timeSlot;
+        this.subject = subject;
         this.group = group;
         this.teacher = teacher;
         this.room = room;
         this.lessonType = lessonType;
         this.day = day;
-
     }
 
     public Long getId() {
@@ -40,6 +41,14 @@ public class Lesson {
 
     public void setTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Group getGroup() {
@@ -87,6 +96,7 @@ public class Lesson {
         return "Lesson{" +
                 "id=" + id +
                 ", timeSlot=" + timeSlot +
+                ", subject=" + subject +
                 ", group=" + group +
                 ", teacher=" + teacher +
                 ", room=" + room +
@@ -102,6 +112,7 @@ public class Lesson {
         Lesson lesson = (Lesson) o;
         return Objects.equals(id, lesson.id) &&
                 timeSlot == lesson.timeSlot &&
+                Objects.equals(subject, lesson.subject) &&
                 Objects.equals(group, lesson.group) &&
                 Objects.equals(teacher, lesson.teacher) &&
                 Objects.equals(room, lesson.room) &&
@@ -111,6 +122,6 @@ public class Lesson {
 
     @Override
     public int hashCode() {
-        return Objects.hash(timeSlot, group, teacher, room, lessonType, day);
+        return Objects.hash(id, timeSlot, subject, group, teacher, room, lessonType, day);
     }
 }

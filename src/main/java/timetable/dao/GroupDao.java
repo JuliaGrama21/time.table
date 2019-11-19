@@ -1,5 +1,6 @@
 package timetable.dao;
 
+import org.apache.log4j.Logger;
 import timetable.model.Group;
 
 import java.sql.*;
@@ -8,9 +9,11 @@ import java.util.List;
 
 public class GroupDao {
 
+    private static final Logger log = Logger.getLogger(GroupDao.class);
+
     private Connection connection = ConnectionToDB.getConnection();
 
-    public void addGroup(Group group) {
+    public boolean addGroup(Group group) {
         try {
             if (checkGroup(group)) {
                 String INSERT_GROUP = "INSERT INTO groups(group_number, group_name) VALUES (?,?)";
@@ -18,34 +21,39 @@ public class GroupDao {
                 statement.setInt(1, group.getNumber());
                 statement.setString(2, group.getName());
                 statement.executeUpdate();
+                //log.info("");
+                return true;
             }
         } catch (SQLException e) {
             e.getStackTrace();
         }
+        return false;
     }
 
-    public void deleteGroup(Long id) {
+    public boolean deleteGroup(Long id) {
         PreparedStatement statement;
         try {
-            String sql = "delete from groups where id = ?";
+            String sql = "delete from groups where group_id = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public boolean updateGroup(Group group) {
         PreparedStatement preparedStatement;
-        String sql = "UPDATE groups SET group_number = ?, group_name = ? WHERE id = ?";
+        String sql = "UPDATE groups SET group_number = ?, group_name = ? WHERE group_id = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, group.getNumber());
             preparedStatement.setString(2, group.getName());
+            preparedStatement.setLong(3, group.getId());
             preparedStatement.execute();
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

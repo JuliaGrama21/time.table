@@ -33,9 +33,10 @@ public class TimeTableTest {
         Teacher teacher2 = new Teacher(5L, "Roman", "Lazar", "teacher of Cyber");
         room106 = new Room(3L, 106, RoomType.LECTURE_ROOM);
         Room room1 = new Room(4L, 306, RoomType.LECTURE_ROOM);
-        Lesson lesson = new Lesson(4L, TimeSlot.FIRST, group142, teacher, room106, LessonType.LECTURE, Day.MONDAY);
-        Lesson lesson1 = new Lesson(5L, TimeSlot.FIRST, group242, teacher1, room106, LessonType.LECTURE, Day.WEDNESDAY);
-        Lesson lesson2 = new Lesson(6L, TimeSlot.FIRST, group342, teacher2, room1, LessonType.LECTURE, Day.THURSDAY);
+        Subject subject = new Subject(1L, "java");
+        Lesson lesson = new Lesson(4L, TimeSlot.FIRST, subject, group142, teacher, room106, LessonType.LECTURE, Day.MONDAY);
+        Lesson lesson1 = new Lesson(5L, TimeSlot.FIRST, subject, group242, teacher1, room106, LessonType.LECTURE, Day.WEDNESDAY);
+        Lesson lesson2 = new Lesson(6L, TimeSlot.FIRST, subject, group342, teacher2, room1, LessonType.LECTURE, Day.THURSDAY);
 
         Set<Lesson> lessons = new HashSet<>();
         lessons.add(lesson);
@@ -61,7 +62,8 @@ public class TimeTableTest {
         Group group = new Group(3L, 142, "Engineering");
         Teacher teacher = new Teacher(3L, "Misha", "Chernivchan", "teacher of English");
         Room room = new Room(3L, 106, RoomType.LECTURE_ROOM);
-        Lesson lesson = new Lesson(4L, TimeSlot.FIRST, group, teacher, room, LessonType.LECTURE, Day.FRIDAY);
+        Subject subject = new Subject(1L, "java");
+        Lesson lesson = new Lesson(4L, TimeSlot.FIRST, subject, group, teacher, room, LessonType.LECTURE, Day.FRIDAY);
 
         TIME_TABLE.addLesson(lesson);
         assertTrue("", TIME_TABLE.getLessons().contains(lesson));

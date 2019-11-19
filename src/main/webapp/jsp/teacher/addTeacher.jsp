@@ -5,7 +5,7 @@
     <title>Enter Teacher info</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/styles.css"
           media="screen"/>
-    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/teachersUtils.js"></script>
@@ -13,7 +13,9 @@
 <body>
 <div style="width: 900px" class="container panel panel-footer">
     <h3 style="text-align: center">Enter information</h3>
-
+    <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
+        ${error}
+    </div>
     <form action="addTeacher" method="post">
         <table class="table">
             <tr>
@@ -38,7 +40,8 @@
                 </td>
                 <td align="right">
                     <div>
-                        <input style="margin-top: 5%" type="submit" name="button" class="saveTeacher btn btn-success" value="Save"/>
+                        <input style="margin-top: 5%" type="submit" name="button" class="saveTeacher btn btn-success"
+                               value="Save"/>
                         <input style="margin-top: 5%" class="btn btn-default" type="button"
                                onclick="parent.location='/listOfTeachers'" value="Cancel">
                     </div>

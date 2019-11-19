@@ -17,26 +17,18 @@
     <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
         ${error}
     </div>
-    <form action="editRoom" method="post">
-        <input type="hidden" name="id" value="${room.id}">
+    <form action="editSubject" method="post">
+        <input type="hidden" name="id" value="${subject.id}">
         <table class="table">
             <tr>
-                <td><p>Number Of Room: </p></td>
-                <td><input style="width: 60%" type="text" name="number" maxlength="5" value="${room.number}"
-                           class="form-control"></td>
-
-            </tr>
-            <tr>
-                <td><p>Type Of Room: </p></td>
-                <td><input style="width: 60%" type="text" name="roomType" maxlength="30" value="${room.roomType}"
+                <td><p>Name Of Subject: </p></td>
+                <td><input style="width: 60%" type="text" name="name" maxlength="10" value="${subject.name}"
                            class="form-control"></td>
             </tr>
             <tr>
-                <td>
-                </td>
                 <td align="right">
                     <div>
-                        <input type="submit" name="button" class="saveRoom btn btn-success" value="Save"/>
+                        <input type="submit" name="button" class="saveSubject btn btn-success" value="Save"/>
                     </div>
                 </td>
             </tr>

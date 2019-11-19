@@ -1,10 +1,7 @@
 package timetable.servlet.lesson;
 
 import timetable.model.*;
-import timetable.service.GroupService;
-import timetable.service.LessonService;
-import timetable.service.RoomService;
-import timetable.service.TeacherService;
+import timetable.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,64 +11,71 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static timetable.constant.ErrorConstants.LESSON_EXISTS;
+
 @WebServlet(name = "AddLessonServlet", urlPatterns = {"/addLesson"})
 public class AddLessonServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Lesson> lessons = null;
         Lesson lesson = new Lesson();
         LessonService lessonService = new LessonService();
         TeacherService teacherService = new TeacherService();
         RoomService roomService = new RoomService();
         GroupService groupService = new GroupService();
+        SubjectService subjectService = new SubjectService();
+
         lesson.setTimeSlot(TimeSlot.valueOf(request.getParameter("timeSlot")));
-        lesson.setLessonType(LessonType.valueOf(request.getParameter("lessonType")));
-        lesson.setDay(Day.valueOf(request.getParameter("day")));
+
+        String subjectName = request.getParameter("subject");
+        Long subjectId = subjectService.getSubjectIdByName(subjectName);
+        Subject subject = subjectService.findSubjectById(subjectId);
+        lesson.setSubject(subject);
 
         String teacherId = request.getParameter("teacherId");
-        String roomId = request.getParameter("roomId");
-        String groupId = request.getParameter("groupId");
+        Teacher teacher = teacherService.findTeacherById(Long.valueOf(teacherId));
+        lesson.setTeacher(teacher);
 
-        if (!teacherId.equals("")) {
-            Teacher teacher = teacherService.findTeacherById(Long.valueOf(teacherId));
-            lesson.setTeacher(teacher);
-            Long id = groupService.getGroupIdByNumber(Integer.parseInt(request.getParameter("groupNumber")));
-            lesson.setGroup(groupService.findGroupById(id));
-            lesson.setRoom(roomService.findRoomById(roomService.getRoomIdByNumber(Integer.parseInt(request.getParameter("roomNumber")))));
-            lessonService.addLesson(lesson);
-            lessons = lessonService.getLessonsByTeacher(Long.valueOf(teacherId));
-            request.setAttribute("teacherId", teacherId);
+        String roomNumber = request.getParameter("roomNumber");
+        Long roomId = roomService.getRoomIdByNumber(Integer.parseInt(roomNumber));
+        Room room = roomService.findRoomById(roomId);
+        lesson.setRoom(room);
+
+        String groupNumber = request.getParameter("groupNumber");
+        Long groupId = groupService.getGroupIdByNumber(Integer.parseInt(groupNumber));
+        Group group = groupService.findGroupById(groupId);
+        lesson.setGroup(group);
+
+        lesson.setLessonType(LessonType.valueOf(request.getParameter("lessonType")));
+
+        lesson.setDay(Day.valueOf(request.getParameter("day")));
+
+        boolean isLessonAdded = lessonService.addLesson(lesson);
+        if (isLessonAdded) {
+            request.setAttribute("lessons", lessonService.getAllLessons());
+            request.getRequestDispatcher("jsp/lesson/timeTable.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", LESSON_EXISTS);
+            request.getRequestDispatcher("jsp/lesson/addLesson.jsp").forward(request, response);
         }
-        if (!groupId.equals("")) {
-            Group group = groupService.findGroupById(Long.valueOf(groupId));
-            lesson.setGroup(group);
-            Long groupTeacherId = teacherService.getTeacherIdByName(request.getParameter("firstName"), request.getParameter("lastName"));
-            lesson.setTeacher(teacherService.findTeacherById(groupTeacherId));
-            Long id = roomService.getRoomIdByNumber(Integer.parseInt(request.getParameter("roomNumber")));
-            lesson.setRoom(roomService.findRoomById(id));
-            lessonService.addLesson(lesson);
-            lessons = lessonService.getLessonsByGroup(Long.valueOf(groupId));
-            request.setAttribute("groupId", groupId);
-        }
-        if (!roomId.equals("")) {
-            Room room = roomService.findRoomById(Long.valueOf(roomId));
-            lesson.setRoom(room);
-            Long id = groupService.getGroupIdByNumber(Integer.parseInt(request.getParameter("groupNumber")));
-            lesson.setGroup(groupService.findGroupById(id));
-            Long roomTeacherId = teacherService.getTeacherIdByName(request.getParameter("firstName"), request.getParameter("lastName"));
-            lesson.setTeacher(teacherService.findTeacherById(roomTeacherId));
-            lessonService.addLesson(lesson);
-            lessons = lessonService.getLessonsByRoom(Long.valueOf(roomId));
-            request.setAttribute("roomId", roomId);
-        }
-        request.setAttribute("lessons", lessons);
-        request.getRequestDispatcher("jsp/lesson/lessons.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("teacherId", request.getParameter("teacherId"));
-        request.setAttribute("roomId", request.getParameter("roomId"));
-        request.setAttribute("groupId", request.getParameter("groupId"));
+        GroupService groupService = new GroupService();
+        List<Group> groups = groupService.getAllGroups();
+        request.setAttribute("groups", groups);
+
+        RoomService roomService = new RoomService();
+        List<Room> rooms = roomService.getAllRooms();
+        request.setAttribute("rooms", rooms);
+
+        SubjectService subjectService = new SubjectService();
+        List<Subject> subjects = subjectService.getAllSubjects();
+        request.setAttribute("subjects", subjects);
+
+        TeacherService teacherService = new TeacherService();
+        List<Teacher> teachers = teacherService.getAllTeachers();
+        request.setAttribute("teachers", teachers);
+
         request.getRequestDispatcher("jsp/lesson/addLesson.jsp").forward(request, response);
     }
 }

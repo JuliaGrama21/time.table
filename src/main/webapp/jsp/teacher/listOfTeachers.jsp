@@ -13,6 +13,9 @@
 <body>
 <div style="width: 900px" class="container panel panel-footer">
     <h3 style="text-align: center">List Of Teacher</h3>
+    <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
+        ${error}
+    </div>
     <c:if test="${teachers.size() == 0}">
         <div><em>No teachers</em></div>
     </c:if>
@@ -39,17 +42,17 @@
                                 id="${teacher.id}"></button>
                     </td>
                     <td class="text-center"><a class="btn btn-primary"
-                                              href="/lessons?teacherId=${teacher.id}">TimeTable</a>
+                                               href="lessons?teacherId=${teacher.id}">TimeTable</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
     <td align="right">
-            <input style="margin-left: 35%; margin-top: 5%" class="btn btn-success" type="button"
-                   onclick="parent.location='/addTeacher'" value="Add teacher">
-            <input style="margin-top: 5%" class="btn btn-default" type="button" onclick="parent.location='/home_page'"
-                   value="Return to home page">
+        <input style="margin-left: 35%; margin-top: 5%" class="btn btn-success" type="button"
+               onclick="parent.location='/addTeacher'" value="Add teacher">
+        <input style="margin-top: 5%" class="btn btn-default" type="button" onclick="parent.location='/home_page'"
+               value="Return to home page">
     </td>
 </div>
 </body>

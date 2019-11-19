@@ -19,16 +19,14 @@ $('document').ready(function () {
         });
     });
 
+    function validateForm() {
+        console.log('hello')
 
-    $('#showTimeTableForGroup').click(function () {
-        parent.location = '/searchGroup';
-    });
-
-    $('#addNewGroup').click(function () {
-        parent.location = '/addGroup';
-    });
-
-    $('#showAllGroups').click(function () {
-        parent.location = '/listOfGroups';
-    });
+        var z = document.forms["addGroup"]["number"].value;
+        if(/\D/.test(z))
+        {
+            alert("Please only enter numeric characters for group! (Allowed input:0-9)");
+            return false;
+        }
+    }
 });

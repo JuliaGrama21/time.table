@@ -10,23 +10,25 @@ public class TeacherDao {
 
     private Connection connection = ConnectionToDB.getConnection();
 
-    public void addTeacher(Teacher teacher) {
+    public boolean addTeacher(Teacher teacher) {
         try {
             if (checkTeacher(teacher)) {
-                String INSERT_TEACHER = "INSERT INTO teachers(first_name, last_name, position) VALUES (?,?,? )";
+                String INSERT_TEACHER = "INSERT INTO teachers(first_name, last_name, position) VALUES (?,?,?)";
                 PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER);
                 statement.setString(1, teacher.getFirstName());
                 statement.setString(2, teacher.getLastName());
                 statement.setString(3, teacher.getPosition());
                 statement.executeUpdate();
+                return true;
             }
             //statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public void deleteTeacher(Long id) {
+    public boolean deleteTeacher(Long id) {
         PreparedStatement statement;
         try {
             String sql = "delete from teachers where teacher_id = ?";
@@ -36,7 +38,9 @@ public class TeacherDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public boolean updateTeacher(Teacher teacher) {
@@ -115,9 +119,8 @@ public class TeacherDao {
             String sql = "SELECT * from teachers WHERE teacher_id = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Math.toIntExact(teacherId));
+            statement.setLong(1, teacherId);
             ResultSet rs = statement.executeQuery();
-
             while (rs.next()) {
                 teacher.setId(teacherId);
                 teacher.setFirstName(rs.getString("first_name"));
