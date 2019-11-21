@@ -37,9 +37,7 @@ public class EditLessonServlet extends HttpServlet {
         Subject subject = subjectService.findSubjectById(subjectId);
         lesson.setSubject(subject);
 
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        Long teacherId = teacherService.getTeacherIdByName(firstName, lastName);
+        Long teacherId = Long.valueOf(request.getParameter("teacherId"));
         Teacher teacher = teacherService.findTeacherById(teacherId);
         lesson.setTeacher(teacher);
 
@@ -68,11 +66,27 @@ public class EditLessonServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.setAttribute("lessonId", request.getParameter("lessonId"));
         LessonService lessonService = new LessonService();
         Long lessonId = Long.valueOf(request.getParameter("id"));
         Lesson lesson = lessonService.findLessonById(lessonId);
         request.setAttribute("lesson", lesson);
+
+        GroupService groupService = new GroupService();
+        List<Group> groups = groupService.getAllGroups();
+        request.setAttribute("groups", groups);
+
+        RoomService roomService = new RoomService();
+        List<Room> rooms = roomService.getAllRooms();
+        request.setAttribute("rooms", rooms);
+
+        SubjectService subjectService = new SubjectService();
+        List<Subject> subjects = subjectService.getAllSubjects();
+        request.setAttribute("subjects", subjects);
+
+        TeacherService teacherService = new TeacherService();
+        List<Teacher> teachers = teacherService.getAllTeachers();
+        request.setAttribute("teachers", teachers);
+
         request.getRequestDispatcher("jsp/lesson/editLesson.jsp").forward(request, response);
     }
 }

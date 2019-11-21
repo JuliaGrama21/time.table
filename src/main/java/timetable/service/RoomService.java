@@ -37,6 +37,10 @@ public class RoomService {
         return roomDao.getAllRooms();
     }
 
+    public boolean checkRoom(Room room) {
+        return roomDao.checkRoom(room);
+    }
+
 }
 
 

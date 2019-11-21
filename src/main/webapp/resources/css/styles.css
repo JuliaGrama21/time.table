@@ -5,3 +5,7 @@
 .hidden{
    display: none;
 }
+
+.list-group{
+   font-size: 25px;
+}

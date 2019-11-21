@@ -11,7 +11,7 @@
     <script src="${pageContext.servletContext.contextPath}/resources/js/teachersUtils.js"></script>
 </head>
 <body>
-<div style="width: 900px" class="container panel panel-footer">
+<div style="width: 800px" class="container panel panel-footer">
     <h3 style="text-align: center">Enter information</h3>
     <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
         ${error}
@@ -21,18 +21,18 @@
             <tr>
                 <td><p>First Name: </p></td>
                 <td><input style="width: 60%" type="text" id="firstName" name="firstName" maxlength="30"
-                           class="form-control" required="true"></td>
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
 
             </tr>
             <tr>
                 <td><p>Last Name: </p></td>
                 <td><input style="width: 60%" type="text" id="lastName" name="lastName" maxlength="30"
-                           class="form-control" required="true"></td>
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
             </tr>
             <tr>
                 <td><p>Position: </p></td>
                 <td><input style="width: 60%" type="text" id="position" name="position" maxlength="30"
-                           class="form-control" required="true"></td>
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
                 </td>
             </tr>
             <tr>

@@ -22,19 +22,19 @@
         <table class="table">
             <tr>
                 <td><p>First Name: </p></td>
-                <td><input style="width: 60%" type="text" name="firstName" maxlength="30" value="${teacher.firstName}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="firstName" maxlength="30" value="${teacher.firstName}"
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
 
             </tr>
             <tr>
                 <td><p>Last Name: </p></td>
-                <td><input style="width: 60%" type="text" name="lastName" maxlength="30" value="${teacher.lastName}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="lastName" maxlength="30" value="${teacher.lastName}"
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
             </tr>
             <tr>
                 <td><p>Position: </p></td>
-                <td><input style="width: 60%" type="text" name="position" maxlength="30" value="${teacher.position}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="position" maxlength="30" value="${teacher.position}"
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
                 </td>
             </tr>
             <tr>
@@ -43,6 +43,8 @@
                 <td align="right">
                     <div>
                         <input type="submit" name="button" class="saveLesson btn btn-success" value="Save"/>
+                        <input  class="btn btn-default" type="button" onclick="parent.location='/listOfTeachers'"
+                                value="Cancel">
                     </div>
                 </td>
             </tr>

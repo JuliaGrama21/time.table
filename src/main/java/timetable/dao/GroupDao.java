@@ -138,9 +138,9 @@ public class GroupDao {
     public boolean checkGroup(Group group) {
         PreparedStatement statement;
         try {
-            String sqlTeacher = "SELECT COUNT(*) from groups WHERE group_number = ? AND group_name = ?";
+            String sql = "SELECT COUNT(*) from groups WHERE group_number = ? AND group_name = ?";
             connection = ConnectionToDB.getConnection();
-            statement = connection.prepareStatement(sqlTeacher);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, group.getNumber());
             statement.setString(2, group.getName());
             ResultSet rs = statement.executeQuery();

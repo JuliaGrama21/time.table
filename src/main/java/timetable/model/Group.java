@@ -1,11 +1,22 @@
 package timetable.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Group {
 
     private Long id;
-    private int number;
+
+    @Valid
+    @NotNull(message = "Please enter number")
+    private Integer number;
+
+    @Valid
+    @Size(max = 20, min = 5, message = "Specialization is invalid")
+    @NotEmpty(message = "Please enter specialization")
     private String name;
 
     public Group() {

@@ -22,13 +22,15 @@
         <table class="table">
             <tr>
                 <td><p>Name Of Subject: </p></td>
-                <td><input style="width: 60%" type="text" name="name" maxlength="10" value="${subject.name}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="name" maxlength="10" value="${subject.name}"
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
             </tr>
             <tr>
                 <td align="right">
                     <div>
                         <input type="submit" name="button" class="saveSubject btn btn-success" value="Save"/>
+                        <input  class="btn btn-default" type="button" onclick="parent.location='/listOfSubjects'"
+                                value="Cancel">
                     </div>
                 </td>
             </tr>

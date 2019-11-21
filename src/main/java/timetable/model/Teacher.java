@@ -1,12 +1,19 @@
 package timetable.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Teacher {
 
     private Long id;
+
+    @NotNull(message = "Enter first name of teacher")
     private String firstName;
+
+    @NotNull(message = "Enter last name of teacher")
     private String lastName;
+
+    @NotNull(message = "Enter position of teacher")
     private String position;
 
     public Teacher() {

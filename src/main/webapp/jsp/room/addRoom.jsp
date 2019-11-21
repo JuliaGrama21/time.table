@@ -11,7 +11,7 @@
     <script src="${pageContext.servletContext.contextPath}/resources/js/roomsUtils.js"></script>
 </head>
 <body>
-<div style="width: 900px" class="container panel panel-footer">
+<div style="width: 800px" class="container panel panel-footer">
     <h3 style="text-align: center">Enter information</h3>
     <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
         ${error}
@@ -20,13 +20,13 @@
         <table class="table">
             <tr>
                 <td><p>Number Of Room: </p></td>
-                <td><input style="width: 60%" type="text" name="number" maxlength="30"
-                           class="form-control" required="true"></td>
+                <td><input style="width: 40%" type="text" name="number" maxlength="30"
+                           class="form-control" required pattern="^[ 0-9]+$"></td>
             </tr>
             <tr>
                 <td><p>Type Of Room: </p></td>
                 <td>
-                    <p><select style="width: 30%" name="roomType" class="fieldRoomType form-control" required="true">
+                    <p><select style="width: 40%" name="roomType" class="fieldRoomType form-control" required="true">
                         <option></option>
                         <option>LECTURE_ROOM</option>
                         <option>LABORATORY</option>

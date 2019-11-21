@@ -23,8 +23,8 @@
             <tr>
                 <td><p>Time Slot: </p></td>
                 <td>
-                    <p><select style="width: 30%" name="timeSlot" class="fieldTimeSlot form-control"
-                               value="${lesson.timeSlot}">
+                    <p><select style="width: 40%" name="timeSlot" class="fieldTimeSlot form-control"
+                               value="${lesson.timeSlot}" required="true">
                         <option></option>
                         <option>FIRST</option>
                         <option>SECOND</option>
@@ -37,36 +37,45 @@
             </tr>
             <tr>
                 <td><p>Group: </p></td>
-                <td><input style="width: 30%" type="text" name="groupNumber" value="${lesson.group.number}"
-                           maxlength="5"
-                           class="form-control"></td>
+                <td>
+                    <select style="width: 40%" name="groupNumber" class="fieldTimeSlot form-control" required="true">
+                        <c:forEach items="${groups}" var="group">
+                        <option value="${group.number}">${group.number}</option>
+                        </c:forEach>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><p>Teacher: </p></td>
-                <td><input style="width: 30%" type="text" name="firstName" value="${lesson.teacher.firstName}"
-                           maxlength="5"
-                           class="form-control">
-                    <input style="width: 30%" type="text" name="lastName" value="${lesson.teacher.lastName}"
-                           maxlength="5"
-                           class="form-control"></td>
+                <td><select style="width: 40%" name="teacherId" class="fieldTimeSlot form-control" required="true">
+                    <c:forEach items="${teachers}" var="teacher">
+                        <option value="${teacher.id}">${teacher.firstName}${teacher.lastName}</option>
+                    </c:forEach>
+                </select></td>
             </tr>
             <tr>
                 <td><p>Subject: </p></td>
-                <td><input style="width: 30%" type="text" name="subject" value="${lesson.subject.name}" maxlength="10"
-                           class="form-control"></td>
+                <td><select style="width: 40%" name="subject" class="fieldTimeSlot form-control" required="true">
+                    <c:forEach items="${subjects}" var="subject">
+                        <option value="${subject.name}">${subject.name}</option>
+                    </c:forEach>
+                </select></td>
                 </td>
             </tr>
             <tr>
                 <td><p>Room: </p></td>
-                <td><input style="width: 30%" type="text" name="roomNumber" value="${lesson.room.number}" maxlength="5"
-                           class="form-control"></td>
+                <td><select style="width: 40%" name="roomNumber" class="fieldTimeSlot form-control" required="true">
+                    <c:forEach items="${rooms}" var="room">
+                        <option value="${room.number}">${room.number}</option>
+                    </c:forEach>
+                </select></td>
                 </td>
             </tr>
             <tr>
                 <td><p>Lesson Type: </p></td>
                 <td>
-                    <p><select style="width: 30%" name="lessonType" value="${lesson.lessonType}"
-                               class="fieldLessonType form-control">
+                    <p><select style="width: 40%" name="lessonType" value="${lesson.lessonType}"
+                               class="fieldLessonType form-control" required="true">
                         <option></option>
                         <option>LECTURE</option>
                         <option>LAB</option>
@@ -75,7 +84,7 @@
             <tr>
                 <td><p>Day: </p></td>
                 <td>
-                    <p><select style="width: 30%" name="day" value="${lesson.day}" class="fieldDay form-control">
+                    <p><select style="width: 40%" name="day" value="${lesson.day}" class="fieldDay form-control" required="true">
                         <option></option>
                         <option>MONDAY</option>
                         <option>TUESDAY</option>
@@ -89,6 +98,8 @@
                 </td>
                 <td align="right">
                     <input type="submit" name="button" class="saveRoom btn btn-success" value="Save"/>
+                    <input  class="btn btn-default" type="button" onclick="parent.location='/timeTable'"
+                            value="Cancel">
                 </td>
             </tr>
         </table>

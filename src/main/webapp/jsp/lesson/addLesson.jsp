@@ -12,7 +12,7 @@
     <script src="${pageContext.servletContext.contextPath}/resources/js/lessonsUtils.js"></script>
 </head>
 <body>
-<div style="width: 700px" class="container panel panel-footer">
+<div style="width: 800px" class="container panel panel-footer">
     <h3 style="text-align: center">Enter information</h3>
     <div class="alert alert-danger ${error==null ? "hidden" : ""}" role="alert ">
         ${error}

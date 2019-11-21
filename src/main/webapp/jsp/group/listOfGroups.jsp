@@ -40,7 +40,7 @@
                                 id="${group.id}"></button>
                     </td>
                     <td class="text-center"><a class="btn btn-primary"
-                                               href="/lessons?id=${group.id}">TimeTable</a>
+                                               href="/lessons?groupId=${group.id}">TimeTable</a>
                     </td>
                 </tr>
             </c:forEach>

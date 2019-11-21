@@ -1,5 +1,6 @@
 package timetable.dao;
 
+import timetable.model.Group;
 import timetable.model.Room;
 import timetable.model.RoomType;
 
@@ -13,12 +14,14 @@ public class RoomDao {
 
     public boolean addRoom(Room room) {
         try {
-            String INSERT_ROOM = "INSERT INTO rooms(room_number, room_type) VALUES (?,?)";
-            PreparedStatement statement = connection.prepareStatement(INSERT_ROOM);
-            statement.setInt(1, room.getNumber());
-            statement.setString(2, room.getRoomType().name());
-            statement.executeUpdate();
-            return true;
+            if (checkRoom(room)) {
+                String INSERT_ROOM = "INSERT INTO rooms(room_number, room_type) VALUES (?,?)";
+                PreparedStatement statement = connection.prepareStatement(INSERT_ROOM);
+                statement.setInt(1, room.getNumber());
+                statement.setString(2, room.getRoomType().name());
+                statement.executeUpdate();
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -146,5 +149,25 @@ public class RoomDao {
             System.out.println(e.getMessage());
         }
         return roomList;
+    }
+
+    public boolean checkRoom(Room room) {
+        PreparedStatement statement;
+        try {
+            String sql = "SELECT COUNT(*) from rooms WHERE room_number = ?";
+            connection = ConnectionToDB.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, room.getNumber());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
     }
 }

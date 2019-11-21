@@ -1,10 +1,15 @@
 package timetable.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Subject {
 
     private Long id;
+
+    @Valid
+    @NotNull(message = "Enter name of subject")
     private String name;
 
     public Subject() {

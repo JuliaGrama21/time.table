@@ -158,12 +158,11 @@ public class TeacherDao {
     public boolean checkTeacher(Teacher teacher) {
         PreparedStatement statement;
         try {
-            String sqlTeacher = "SELECT COUNT(*) from teachers WHERE first_name = ? AND last_name = ? AND position = ?";
+            String sqlTeacher = "SELECT COUNT(*) from teachers WHERE first_name = ? AND last_name = ?";
             connection = ConnectionToDB.getConnection();
             statement = connection.prepareStatement(sqlTeacher);
             statement.setString(1, teacher.getFirstName());
             statement.setString(2, teacher.getLastName());
-            statement.setString(3, teacher.getPosition());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int count = rs.getInt("count");

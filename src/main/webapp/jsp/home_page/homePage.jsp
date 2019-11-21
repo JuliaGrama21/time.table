@@ -11,12 +11,13 @@
 <body>
 <div class="container panel panel-footer" style="width: 100%; height: 100%">
     <h1 class="text-center">Welcome to TimeTable!</h1>
-    <div align="center">
-        <a class="btn btn-info buttons" style="font-size: 22px;" href="listOfTeachers">Teacher</a>
-        <a class="btn btn-info buttons" style="font-size: 22px;" href="listOfGroups">Group</a>
-        <a class="btn btn-info buttons" style="font-size: 22px;" href="listOfRooms">Room</a>
-        <a class="btn btn-info buttons" style="font-size: 22px;" href="timeTable">Lesson</a>
-        <a class="btn btn-info buttons" style="font-size: 22px;" href="listOfSubject">Subject</a>
+
+    <div class="list-group">
+        <a href="listOfTeachers" class="list-group-item list-group-item-action">All teachers</a>
+        <a href="listOfGroups" class="list-group-item list-group-item-action">All groups</a>
+        <a href="listOfRooms" class="list-group-item list-group-item-action">All rooms</a>
+        <a href="listOfSubject" class="list-group-item list-group-item-action">All subjects</a>
+        <a href="timeTable" class="list-group-item list-group-item-action">Time Table</a>
     </div>
 </div>
 </body>

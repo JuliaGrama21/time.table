@@ -1,12 +1,20 @@
 package timetable.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Room {
 
 
+    @Valid
     private Long id;
-    private int number;
+
+    @Valid
+    @NotNull(message = "Please enter number of room")
+    private Integer number;
+
+    @Valid
     private RoomType roomType;
 
     public Room() {

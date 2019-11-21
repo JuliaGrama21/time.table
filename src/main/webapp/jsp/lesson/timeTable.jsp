@@ -20,15 +20,15 @@
     <c:if test="${lessons.size() != 0}">
         <table class="table table-bordered table-responsive">
             <tr>
-                <th class="col-sm-6 text-center">Time Slot</th>
+                <th class="col-sm-2 text-center">Time Slot</th>
                 <th class="col-sm-2 text-center">Subject</th>
                 <th class="col-sm-1 text-center">Group</th>
-                <th class="col-sm-1 text-center">Teacher</th>
+                <th class="col-sm-2 text-center">Teacher</th>
                 <th class="col-sm-1 text-center">Room</th>
                 <th class="col-sm-2 text-center">Lesson Type</th>
                 <th class="col-sm-2 text-center">Day</th>
-                <th class="col-sm-2 text-center"></th>
-                <th class="col-sm-2 text-center"></th>
+                <th class="col-sm-1 text-center"></th>
+                <th class="col-sm-1 text-center"></th>
             </tr>
             <c:forEach items="${lessons}" var="lesson">
                 <tr valign="top">

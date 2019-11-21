@@ -22,19 +22,21 @@
         <table class="table">
             <tr>
                 <td><p>Number Of Group: </p></td>
-                <td><input style="width: 60%" type="text" name="number" maxlength="5" value="${group.number}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="number" maxlength="5" value="${group.number}"
+                           class="form-control" required pattern="^[ 0-9]+$"></td>
 
             </tr>
             <tr>
                 <td><p>Speciality: </p></td>
-                <td><input style="width: 60%" type="text" name="name" maxlength="30" value="${group.name}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="name" maxlength="30" value="${group.name}"
+                           class="form-control" required pattern="^[a-zA-Z]+$"></td>
             </tr>
             <tr>
                 <td align="right">
                     <div>
                         <input type="submit" name="button" class="saveLesson btn btn-success" value="Save"/>
+                        <input  class="btn btn-default" type="button" onclick="parent.location='/listOfGroups'"
+                                value="Cancel">
                     </div>
                 </td>
             </tr>

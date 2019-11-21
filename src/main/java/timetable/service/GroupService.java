@@ -32,4 +32,8 @@ public class GroupService {
     public List<Group> getAllGroups() {
         return groupDao.getAllGroups();
     }
+
+    public boolean checkGroup(Group group) {
+        return groupDao.checkGroup(group);
+    }
 }

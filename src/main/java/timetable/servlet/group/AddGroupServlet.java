@@ -1,6 +1,5 @@
 package timetable.servlet.group;
 
-import timetable.constant.ErrorConstants;
 import timetable.model.Group;
 import timetable.service.GroupService;
 

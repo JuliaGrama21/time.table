@@ -22,21 +22,29 @@
         <table class="table">
             <tr>
                 <td><p>Number Of Room: </p></td>
-                <td><input style="width: 60%" type="text" name="number" maxlength="5" value="${room.number}"
-                           class="form-control"></td>
+                <td><input style="width: 40%" type="text" name="number" maxlength="5" value="${room.number}"
+                           class="form-control" required pattern="^[ 0-9]+$"></td>
 
             </tr>
             <tr>
                 <td><p>Type Of Room: </p></td>
-                <td><input style="width: 60%" type="text" name="roomType" maxlength="30" value="${room.roomType}"
-                           class="form-control"></td>
+                <td>
+                    <p><select style="width: 40%" name="roomType" class="fieldRoomType form-control"
+                               value="${room.roomType}" required="true">
+                        <option></option>
+                        <option>LECTURE_ROOM</option>
+                        <option>LABORATORY</option>
+                    </select></p>
+                </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td align="right">
                     <div>
-                        <input type="submit" name="button" class="saveRoom btn btn-success" value="Save"/>
+                        <input  type="submit" name="button" class="saveRoom btn btn-success" value="Save"/>
+                        <input  class="btn btn-default" type="button" onclick="parent.location='/listOfRooms'"
+                               value="Cancel">
                     </div>
                 </td>
             </tr>
