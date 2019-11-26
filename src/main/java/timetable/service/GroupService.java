@@ -1,13 +1,15 @@
 package timetable.service;
 
 import timetable.dao.GroupDao;
+import timetable.dao.HibernateGroupDao;
 import timetable.model.Group;
 
 import java.util.List;
 
 public class GroupService {
 
-    GroupDao groupDao = new GroupDao();
+    private GroupDao groupDaoo = new GroupDao();
+    private HibernateGroupDao groupDao = new HibernateGroupDao();
 
     public boolean addGroup(Group group) {
         return groupDao.addGroup(group);
@@ -22,7 +24,7 @@ public class GroupService {
     }
 
     public Long getGroupIdByNumber(int number) {
-        return groupDao.getGroupIdByNumber(number);
+        return groupDaoo.getGroupIdByNumber(number);
     }
 
     public Group findGroupById(Long id) {
@@ -34,6 +36,7 @@ public class GroupService {
     }
 
     public boolean checkGroup(Group group) {
-        return groupDao.checkGroup(group);
+        return groupDaoo.checkGroup(group);
     }
+
 }

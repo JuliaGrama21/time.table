@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDao {
+public class GroupDao implements IGroupDao {
 
     private static final Logger log = Logger.getLogger(GroupDao.class);
 
@@ -21,7 +21,7 @@ public class GroupDao {
                 statement.setInt(1, group.getNumber());
                 statement.setString(2, group.getName());
                 statement.executeUpdate();
-                //log.info("");
+                log.info("method addGroup");
                 return true;
             }
         } catch (SQLException e) {

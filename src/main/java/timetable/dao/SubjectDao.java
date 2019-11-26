@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectDao {
+public class SubjectDao implements ISubjectDao {
     private Connection connection = ConnectionToDB.getConnection();
 
     public boolean addSubject(Subject subject) {

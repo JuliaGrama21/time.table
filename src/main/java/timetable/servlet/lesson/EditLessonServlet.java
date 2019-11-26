@@ -1,6 +1,5 @@
 package timetable.servlet.lesson;
 
-import timetable.constant.ErrorConstants;
 import timetable.model.*;
 import timetable.service.*;
 
@@ -10,17 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static timetable.constant.ErrorConstants.*;
+import static timetable.constant.ErrorConstants.LESSON_EXISTS;
 
 @WebServlet(name = "EditLessonServlet", urlPatterns = {"/editLesson"})
 public class EditLessonServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        List<Lesson> lessons = new ArrayList<>();
         Lesson lesson = new Lesson();
         LessonService lessonService = new LessonService();
         TeacherService teacherService = new TeacherService();

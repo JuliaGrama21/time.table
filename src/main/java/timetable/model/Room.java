@@ -1,20 +1,22 @@
 package timetable.model;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "rooms")
 public class Room {
 
-
-    @Valid
+    @Id
+    @Column(name = "room_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Valid
-    @NotNull(message = "Please enter number of room")
+    @Column(name = "room_number", unique = true)
     private Integer number;
 
-    @Valid
+    @Enumerated(EnumType.STRING)
+    @Column(name = "room_type", length = 16)
     private RoomType roomType;
 
     public Room() {

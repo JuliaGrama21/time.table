@@ -1,22 +1,21 @@
 package timetable.model;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "groups")
 public class Group {
 
+    @Id
+    @Column(name = "group_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Valid
-    @NotNull(message = "Please enter number")
+    @Column(name = "group_number", unique = true)
     private Integer number;
 
-    @Valid
-    @Size(max = 20, min = 5, message = "Specialization is invalid")
-    @NotEmpty(message = "Please enter specialization")
+    @Column(name = "group_name")
     private String name;
 
     public Group() {

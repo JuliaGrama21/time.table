@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LessonDao {
+public class LessonDao implements ILessonDao {
     private Connection connection = ConnectionToDB.getConnection();
 
     public boolean addLesson(Lesson lesson) {
@@ -179,7 +179,7 @@ public class LessonDao {
         return lessonsForGroup;
     }
 
-    public void deleteLesson(Long id) {
+    public boolean deleteLesson(Long id) {
         PreparedStatement statement = null;
         Connection connection = null;
         try {
@@ -190,18 +190,9 @@ public class LessonDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            return false;
         }
+        return true;
     }
 
     public boolean updateLesson(Lesson lesson) {

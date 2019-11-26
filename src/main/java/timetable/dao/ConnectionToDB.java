@@ -13,7 +13,7 @@ public class ConnectionToDB {
     public static Connection getConnection() {
         if (connection == null) {
             try {
-                String url = "jdbc:postgresql://localhost:5432/time_table";
+                String url = "jdbc:postgresql://localhost:5432/time_table2";
                 String username = "postgres";
                 String password = "postgres";
                 Class.forName("org.postgresql.Driver");

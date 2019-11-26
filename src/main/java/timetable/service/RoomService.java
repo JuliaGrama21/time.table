@@ -1,5 +1,6 @@
 package timetable.service;
 
+import timetable.dao.HibernateRoomDao;
 import timetable.dao.RoomDao;
 import timetable.model.Room;
 
@@ -7,7 +8,8 @@ import java.util.List;
 
 public class RoomService {
 
-    private RoomDao roomDao = new RoomDao();
+    private RoomDao roomDaoo = new RoomDao();
+    private HibernateRoomDao roomDao = new HibernateRoomDao();
 
     public boolean addRoom(Room room) {
         return roomDao.addRoom(room);
@@ -22,15 +24,11 @@ public class RoomService {
     }
 
     public Long getRoomIdByNumber(int number) {
-        return roomDao.getRoomIdByNumber(number);
+        return roomDaoo.getRoomIdByNumber(number);
     }
 
     public Room findRoomById(Long roomId) {
         return roomDao.findRoomById(roomId);
-    }
-
-    public String getRoomTypeByNumber(int number) {
-        return roomDao.getRoomTypeByNumber(number);
     }
 
     public List<Room> getAllRooms() {
@@ -38,7 +36,7 @@ public class RoomService {
     }
 
     public boolean checkRoom(Room room) {
-        return roomDao.checkRoom(room);
+        return roomDaoo.checkRoom(room);
     }
 
 }

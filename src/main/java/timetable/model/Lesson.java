@@ -1,16 +1,43 @@
 package timetable.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "lessons")
 public class Lesson {
 
+    @Id
+    @Column(name = "lesson_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "time_slot", length = 16)
     private TimeSlot timeSlot;
+
+    @ManyToOne
+    @JoinColumn(name = "id_subject")
     private Subject subject;
+
+    @ManyToOne
+    @JoinColumn(name = "id_group")
     private Group group;
+
+    @ManyToOne
+    @JoinColumn(name = "id_teacher")
     private Teacher teacher;
+
+    @ManyToOne
+    @JoinColumn(name = "id_room")
     private Room room;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "lesson_type", length = 10)
     private LessonType lessonType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "day", length = 10)
     private Day day;
 
     public Lesson() {

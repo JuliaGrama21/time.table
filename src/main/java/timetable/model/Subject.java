@@ -1,15 +1,18 @@
 package timetable.model;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "subjects")
 public class Subject {
 
+    @Id
+    @Column(name = "subject_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Valid
-    @NotNull(message = "Enter name of subject")
+    @Column(name = "name", unique = true)
     private String name;
 
     public Subject() {

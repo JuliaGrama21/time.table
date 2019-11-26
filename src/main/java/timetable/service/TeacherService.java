@@ -1,5 +1,6 @@
 package timetable.service;
 
+import timetable.dao.HibernateTeacherDao;
 import timetable.dao.TeacherDao;
 import timetable.model.Teacher;
 
@@ -7,7 +8,8 @@ import java.util.List;
 
 public class TeacherService {
 
-    private TeacherDao teacherDao = new TeacherDao();
+    private TeacherDao teacherDaoo = new TeacherDao();
+    private HibernateTeacherDao teacherDao = new HibernateTeacherDao();
 
     public boolean addTeacher(Teacher teacher) {
         return teacherDao.addTeacher(teacher);
@@ -21,12 +23,8 @@ public class TeacherService {
         return teacherDao.updateTeacher(teacher);
     }
 
-    public Long getTeacherIdByTeacher(Teacher teacher) {
-        return teacherDao.getTeacherIdByTeacher(teacher);
-    }
-
     public Long getTeacherIdByName(String firstName, String lastName) {
-        return teacherDao.getTeacherIdByName(firstName, lastName);
+        return teacherDaoo.getTeacherIdByName(firstName, lastName);
     }
 
     public Teacher findTeacherById(Long teacherId) {

@@ -1,19 +1,24 @@
 package timetable.model;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "teachers")
 public class Teacher {
 
+    @Id
+    @Column(name = "teacher_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Enter first name of teacher")
+    @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "Enter last name of teacher")
+    @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Enter position of teacher")
+    @Column(name = "position")
     private String position;
 
     public Teacher() {
@@ -73,7 +78,7 @@ public class Teacher {
     }
 
     public void setName(String name) {
-        String[] parts =name.split(" ");
+        String[] parts = name.split(" ");
         this.firstName = parts[0];
         this.lastName = parts[1];
     }

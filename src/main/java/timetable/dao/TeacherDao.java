@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherDao {
+public class TeacherDao implements ITeacherDao {
 
     private Connection connection = ConnectionToDB.getConnection();
 
@@ -21,7 +21,6 @@ public class TeacherDao {
                 statement.executeUpdate();
                 return true;
             }
-            //statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,25 +71,6 @@ public class TeacherDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public Long getTeacherIdByTeacher(Teacher teacher) {
-        PreparedStatement statement;
-        try {
-            String sql = "SELECT teacher_id from teachers WHERE first_name = ? AND last_name = ? AND position = ?";
-            connection = ConnectionToDB.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, teacher.getFirstName());
-            statement.setString(2, teacher.getLastName());
-            statement.setString(3, teacher.getPosition());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                teacher.setId(rs.getLong("teacher_id"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return teacher.getId();
     }
 
     public Long getTeacherIdByName(String firstName, String lastName) {

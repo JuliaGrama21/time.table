@@ -1,6 +1,5 @@
 package timetable.dao;
 
-import timetable.model.Group;
 import timetable.model.Room;
 import timetable.model.RoomType;
 
@@ -8,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao {
+public class RoomDao implements IRoomDao {
 
     private Connection connection = ConnectionToDB.getConnection();
 
@@ -110,24 +109,6 @@ public class RoomDao {
             System.out.println(e.getMessage());
         }
         return room;
-    }
-
-    public String getRoomTypeByNumber(int number) {
-        Room room = new Room();
-        PreparedStatement statement;
-        try {
-            String sql = "SELECT room_type from rooms WHERE room_number = ?";
-            connection = ConnectionToDB.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, number);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                room.setRoomType(RoomType.valueOf(rs.getString("room_type")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return room.getRoomType().name();
     }
 
     public List<Room> getAllRooms() {

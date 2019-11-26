@@ -1,5 +1,6 @@
 package timetable.service;
 
+import timetable.dao.HibernateLessonDao;
 import timetable.dao.LessonDao;
 import timetable.model.Lesson;
 
@@ -7,7 +8,8 @@ import java.util.List;
 
 public class LessonService {
 
-    private LessonDao lessonDao = new LessonDao();
+    private LessonDao lessonDaoo = new LessonDao();
+    private HibernateLessonDao lessonDao = new HibernateLessonDao();
 
     public boolean addLesson(Lesson lesson) {
         return lessonDao.addLesson(lesson);
@@ -18,19 +20,19 @@ public class LessonService {
     }
 
     public List<Lesson> getLessonsByTeacher(Long id) {
-        return lessonDao.getLessonsByTeacher(id);
+        return lessonDaoo.getLessonsByTeacher(id);
     }
 
     public List<Lesson> getLessonsByRoom(Long id) {
-        return lessonDao.getLessonsByRoom(id);
+        return lessonDaoo.getLessonsByRoom(id);
     }
 
     public List<Lesson> getLessonsByGroup(Long id) {
-        return lessonDao.getLessonsByGroup(id);
+        return lessonDaoo.getLessonsByGroup(id);
     }
 
-    public void deleteLesson(Long id) {
-        lessonDao.deleteLesson(id);
+    public boolean deleteLesson(Long id) {
+        return lessonDao.deleteLesson(id);
     }
 
     public boolean updateLesson(Lesson lesson) {
